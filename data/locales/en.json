@@ -1,0 +1,8 @@
+{
+  "welcome_message": "Welcome, {name}!",
+  "items_count": "{count} item(s)",
+  "empty_cart": "Your cart is empty",
+  "discount": "Discount: {percent}%",
+  "new_messages": "You have {count} new message(s)",
+  "farewell": "Goodbye!"
+}
