@@ -1,47 +1,76 @@
 class ProcHelper:
-    def __init__(self, thresh):
-        self.threshold = thresh
-        self.current = 0
-        self.track = []
+    """
+    This class processes data in batches, applying calculations and a potential discount.
 
-    def part_one(self, dataset):
-        for element in dataset.get('data', []):
-            value = self.helper_func(element['amount'], element['rate'])
-            self.track.append(value)
-        if len(dataset['data']) > 5:
-            self.extra_step()
+    Attributes:
+        threshold (float): A threshold value used for a potential discount.
+        current (float): Stores a calculated value, potentially discounted.
+        track (list): A list to store intermediate calculation results.
 
-    def helper_func(self, a, b):
-        if a > 50:
-            return a * b * 0.85 
-        return a * b
-
-    def extra_step(self):
-        if sum(self.track) > self.threshold:
-            self.current = sum(self.track) * 0.90
-
-    def finalize(self):
-        return self.current if self.current > 0 else sum(self.track)
+    Methods:
+        __init__(self, thresh): Initializes the ProcHelper object with a threshold value.
+        part_one(self, dataset): Processes a single dataset within a batch.
+            - It iterates through 'data' entries in the dataset.
+            - For each entry, it calls helper_func to calculate a value based on 'amount' and 'rate'.
+            - The calculated value is appended to the 'track' list.
+            - If the dataset has more than 5 entries, it calls extra_step.
+        helper_func(self, a, b): Calculates a value based on two input numbers.
+            - If 'a' is greater than 50, it multiplies 'a' and 'b' by 0.85.
+            - Otherwise, it simply multiplies 'a' and 'b'.
+        extra_step(self): Performs an additional calculation if the sum of values in 'track' exceeds the threshold.
+            - If the sum is greater than the threshold, it sets 'current' to 90% of the sum.
+        finalize(self): Returns the final calculated value.
+            - If 'current' is greater than 0, it returns 'current'.
+            - Otherwise, it returns the sum of values in 'track'.
+    """
 
 def batch_proc(batch, thresh):
-    helper = ProcHelper(thresh)
+    """
+    Processes a batch of data using the ProcHelper class.
+
+    Args:
+        batch (list): A list of datasets to be processed.
+        thresh (float): The threshold value for the ProcHelper object.
+
+    Returns:
+        float: The final calculated value after processing the batch.
+    """
+    helper = ProcHelper(thresh)  # Create a ProcHelper object
     for data in batch:
-        helper.part_one(data)
-    return helper.finalize()
+        helper.part_one(data)  # Process each dataset in the batch
+    return helper.finalize()  # Return the final result
 
 def find_largest(data_batches):
-    max_data = None
-    largest = 0
+    """
+    Finds the batch with the largest total amount * rate.
+
+    Args:
+        data_batches (list): A list of data batches.
+
+    Returns:
+        dict: The batch with the largest total amount * rate, or None if the list is empty.
+    """
+    max_data = None  # Initialize to None
+    largest = 0  # Initialize the largest total to 0
     for batch in data_batches:
         total = 0
         for data in batch.get('data', []):
-            total += data['amount'] * data['rate']
+            total += data['amount'] * data['rate']  # Calculate total for the current batch
         if total > largest:
-            largest = total
-            max_data = batch
+            largest = total  # Update largest if current total is bigger
+            max_data = batch  # Store the batch with the largest total
     return max_data
 
 def aux_calc(lst):
+    """
+    Finds the highest 'amount' value in a list of dictionaries.
+
+    Args:
+        lst (list): A list of dictionaries, each containing an 'amount' key.
+
+    Returns:
+        int: The highest 'amount' value found in the list.
+    """
     highest = 0
     for item in lst:
         if item['amount'] > highest:
@@ -49,11 +78,21 @@ def aux_calc(lst):
     return highest
 
 def sum_total(data, multiplier):
+    """
+    Calculates the sum of values in a list, applying a multiplier and a potential discount.
+
+    Args:
+        data (dict): A dictionary containing a list of dictionaries under the 'info' key.
+        multiplier (float): A multiplier to apply to each 'value'.
+
+    Returns:
+        float: The total sum after applying the multiplier and potential discount.
+    """
     total_sum = 0
     for item in data.get('info', []):
         total_sum += item['value'] * multiplier
     if total_sum > 1000:
-        total_sum *= 0.95  # Apply a 5% discount for totals over 1000
+        total_sum *= 0.95  # Apply a 5% discount if total_sum is over 1000
     return total_sum
 
 if __name__ == "__main__":
