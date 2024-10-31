@@ -8,16 +8,22 @@ class ContactList:
         self.contacts = []
 
     def add_contact(self, contact):
-        # Use AI code completion to implement this method
-        pass
+        """Adds a contact to the contact list."""
+        self.contacts.append(contact)
 
     def remove_contact(self, name):
-        # Use AI code completion to implement this method
-        pass
+        """Removes a contact from the contact list by name."""
+        for i, contact in enumerate(self.contacts):
+            if contact.name == name:
+                del self.contacts[i]
+                return  # Exit the function after removing the contact
 
     def find_contact(self, name):
-        # Use AI code completion to implement this method
-        pass
+        """Finds a contact by name and returns the Contact object, or None if not found."""
+        for contact in self.contacts:
+            if contact.name == name:
+                return contact
+        return None  # Contact not found
 
 # Example usage
 if __name__ == "__main__":

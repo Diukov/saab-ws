@@ -3,8 +3,14 @@ def generate_fibonacci(n):
     Generates the Fibonacci sequence up to the n-th term.
     """
     sequence = []
-    # Use AI code completion here to generate the Fibonacci sequence
-    pass  # Remove this pass statement after completing the code
+    a = 0  # Initialize the first term
+    b = 1  # Initialize the second term
+
+    for _ in range(n):
+        sequence.append(a)  # Add the current term to the sequence
+        a, b = b, a + b  # Calculate the next term
+
+    return sequence
 
 # Example usage
 if __name__ == "__main__":

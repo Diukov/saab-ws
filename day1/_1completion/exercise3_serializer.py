@@ -11,15 +11,27 @@ def custom_serialize_user(user):
     """
     Manually serialize the User object into a JSON-like string.
     """
-    # Use AI code completion here to manually construct the JSON-like string
-    pass  # Remove this pass statement after completing the code
+    return f'{{"name": "{user.name}", "age": {user.age}, "email": "{user.email}"}}'
 
 def custom_deserialize_user(serialized_data):
     """
     Manually deserialize the JSON-like string back into a User object.
     """
-    # Use AI code completion here to manually parse the JSON-like string
-    pass  # Remove this pass statement after completing the code
+    data_dict = eval(serialized_data)  # Use eval cautiously, only with trusted data
+    return User(data_dict["name"], data_dict["age"], data_dict["email"])
+
+if __name__ == "__main__":
+    # Create a User object
+    user = User(name="Alice", age=30, email="alice@example.com")
+
+    # Serialize the user object
+    serialized_data = custom_serialize_user(user)
+    print(f"Custom Serialized User: {serialized_data}")
+
+    # Deserialize back to a User object
+    deserialized_user = custom_deserialize_user(serialized_data)
+    print(f"Custom Deserialized User: {deserialized_user}")
+
 
 # Example usage
 if __name__ == "__main__":
