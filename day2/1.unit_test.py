@@ -34,29 +34,54 @@ def process_orders(orders):
 import unittest
 
 class TestProcessOrders(unittest.TestCase):
+
     def test_normal_orders(self):
-        # TODO: Write a test case for normal orders with valid data
-        pass  # Remove this pass statement after completing the code
+        orders = [
+            {'items': [
+                {'name': 'Apple', 'quantity': 2, 'price': 1.0, 'discount': 10},
+                {'name': 'Banana', 'quantity': 3, 'price': 0.5, 'discount': 5}
+            ]}
+        ]
+        expected_price = 4.45  # Calculate this manually
+        self.assertAlmostEqual(process_orders(orders), expected_price)
 
     def test_invalid_data(self):
-        # TODO: Write a test case to handle orders with invalid data (e.g., negative values)
-        pass  # Remove this pass statement after completing the code
+        orders = [
+            {'items': [
+                {'name': 'Apple', 'quantity': -2, 'price': 1.0, 'discount': 10},
+            ]}
+        ]
+        self.assertAlmostEqual(process_orders(orders), 0.0)  # Invalid data should be ignored
 
     def test_bulk_discount(self):
-        # TODO: Write a test case to verify the bulk discount is applied correctly when total items > 100
-        pass  # Remove this pass statement after completing the code
+        orders = [
+            {'items': [
+                {'name': 'Item', 'quantity': 110, 'price': 1.0, 'discount': 0}
+            ]}
+        ]
+        expected_price = 104.50  # Calculate with 5% bulk discount
+        self.assertAlmostEqual(process_orders(orders), expected_price)
 
     def test_empty_orders(self):
-        # TODO: Write a test case for when the list of orders is empty
-        pass  # Remove this pass statement after completing the code
+        orders = []
+        self.assertAlmostEqual(process_orders(orders), 0.0)
 
     def test_missing_fields(self):
-        # TODO: Write a test case for handling orders with missing fields (e.g., missing quantity or price)
-        pass  # Remove this pass statement after completing the code
+        orders = [
+            {'items': [
+                {'name': 'Apple', 'price': 1.0},  # Missing quantity
+            ]}
+        ]
+        self.assertAlmostEqual(process_orders(orders), 0.0)  # Missing fields should be handled
 
     def test_large_numbers(self):
-        # TODO: Write a test case for handling very large numbers in quantity, price, or discount
-        pass  # Remove this pass statement after completing the code
+        orders = [
+            {'items': [
+                {'name': 'Large Item', 'quantity': 10000, 'price': 0.1, 'discount': 20}
+            ]}
+        ]
+        expected_price = 8000.0  # Calculate manually
+        self.assertAlmostEqual(process_orders(orders), expected_price)
 
 if __name__ == "__main__":
     unittest.main()
