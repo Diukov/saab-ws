@@ -1,32 +1,42 @@
-def read_data(file_path):
-    data = []
-    with open(file_path, 'r') as f:
-        for line in f:
-            fields = line.strip().split(',')
-            data.append(fields)
-    return data
+class DataProcessor:
+    def __init__(self, input_file, output_file):
+        self.input_file = input_file
+        self.output_file = output_file
 
-def process_data(data):
-    processed_data = []
-    for item in data:
-        # Some complex processing
-        processed_item = [field.upper() for field in item]
-        processed_data.append(processed_item)
-    return processed_data
+    def read_data(self):
+        data = []
+        with open(self.input_file, 'r') as f:
+            for line in f:
+                fields = line.strip().split(',')
+                data.append(fields)
+        return data
 
-def write_data(file_path, data):
-    with open(file_path, 'w') as f:
+    def process_data(self, data):
+        processed_data = []
         for item in data:
-            line = ','.join(item)
-            f.write(line + '\n')
+            # Some complex processing
+            processed_item = [field.upper() for field in item]
+            processed_data.append(processed_item)
+        return processed_data
+
+    def write_data(self, data):
+        with open(self.output_file, 'w') as f:
+            for item in data:
+                line = ','.join(item)
+                f.write(line + '\n')
+
+    def run(self):
+        data = self.read_data()
+        processed_data = self.process_data(data)
+        self.write_data(processed_data)
 
 # Example usage
 if __name__ == '__main__':
     input_file = 'data/input.csv'
     output_file = 'data/output.csv'
-    data = read_data(input_file)
-    processed_data = process_data(data)
-    write_data(output_file, processed_data)
+    processor = DataProcessor(input_file, output_file)  # Create an instance
+    processor.run()  # Call the run method on the instance
+
 
 """
 Refactor the given procedural code into an object-oriented design,
